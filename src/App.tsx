@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -12,6 +12,7 @@ const App: React.FC = () => {
       <Router>
         <div className="App">
           <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/chat" element={<ChatPage />} />
