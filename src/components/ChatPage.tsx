@@ -128,22 +128,14 @@ const ChatPage: React.FC = () => {
     }
   };
 
-  const sendMessage = () => {
-    if (socket && selectedRoom && newMessage.trim()) {
-      const message = { content: newMessage, roomId: selectedRoom, sender: 'user' };
-      socket.emit('send-message', message);
-      setMessages(prevMessages => {
-        const updatedMessages = {
-          ...prevMessages,
-          [selectedRoom]: [...(prevMessages[selectedRoom] || []), message]
-        };
-        console.log('Updated messages after sending:', updatedMessages);
-        return updatedMessages;
-      });
-      setNewMessage('');
-      scrollToBottom();
-    }
-  };
+const sendMessage = () => {
+  if (socket && selectedRoom && newMessage.trim()) {
+    const message = { content: newMessage, roomId: selectedRoom, sender: 'user' };
+    socket.emit('send-message', message);
+    setNewMessage('');
+    scrollToBottom();
+  }
+};
 
   const addFriend = async () => {
     if (selectedUser && selectedRoom) {
