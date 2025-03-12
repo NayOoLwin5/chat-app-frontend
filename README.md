@@ -27,3 +27,6 @@ npm run start
 - Create and join chat rooms
 - Send and receive messages in real-time
 - Add friends to chat rooms
+
+## Backend Repo
+[https://github.com/NayOoLwin5/chat-app-backend/tree/main](https://github.com/NayOoLwin5/chat-app-backend/tree/main)
