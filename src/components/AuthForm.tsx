@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import api from '../services/api';
 import { useNavigate } from 'react-router-dom';
+import '../styles/AuthForm.css';
 
 interface AuthFormProps {
   isLogin: boolean;
@@ -55,56 +56,82 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin }) => {
   };
 
   return (
-    <div className="auth-form">
-      <h2>{isLogin ? 'Welcome back' : 'Sign up'}</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email address</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-brand">
+          <div className="auth-brand-mark">C</div>
+          <div className="auth-brand-name">ChatApp</div>
         </div>
-        {!isLogin && (
+        <h2>{isLogin ? 'Welcome back' : 'Create your account'}</h2>
+        <p className="auth-subtitle">
+          {isLogin
+            ? 'Sign in to continue to your conversations.'
+            : 'Sign up to start chatting in seconds.'}
+        </p>
+
+        <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="email">Email address</label>
             <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
+              placeholder="you@example.com"
+              autoComplete="email"
             />
           </div>
-        )}
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+          {!isLogin && (
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                placeholder="Your full name"
+                autoComplete="name"
+              />
+            </div>
+          )}
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder="••••••••"
+              autoComplete={isLogin ? 'current-password' : 'new-password'}
+            />
+          </div>
+          <button type="submit" className="submit-btn">
+            {isLogin ? 'Sign in' : 'Create account'}
+          </button>
+        </form>
+
+        <div className="divider">or continue with</div>
+
+        <div className="google-wrap">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => console.log('Google Login Failed')}
+            theme="filled_black"
+            shape="pill"
+            size="large"
           />
         </div>
-        <button type="submit" className="submit-btn">
-          {isLogin ? 'Continue' : 'Sign up'}
-        </button>
-      </form>
-      <div className="divider">OR</div>
-      <GoogleLogin
-        onSuccess={handleGoogleSuccess}
-        onError={() => console.log('Google Login Failed')}
-      />
-      <p>
-        {isLogin ? "Don't have an account? " : 'Already have an account? '}
-        <a href={isLogin ? '/signup' : '/login'}>
-          {isLogin ? 'Sign up' : 'Log in'}
-        </a>
-      </p>
+
+        <p className="auth-switch">
+          {isLogin ? "Don't have an account? " : 'Already have an account? '}
+          <a href={isLogin ? '/signup' : '/login'}>
+            {isLogin ? 'Sign up' : 'Log in'}
+          </a>
+        </p>
+      </div>
     </div>
   );
 };
